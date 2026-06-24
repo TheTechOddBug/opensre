@@ -28,13 +28,14 @@ from __future__ import annotations
 from rich.theme import Theme
 
 # ── Semantic color tokens (the only permitted colours) ─────────────────────
+# BRAND/DIM/HIGHLIGHT/WARNING are re-exported from app.ui_theme so core
+# modules (e.g. the publish_findings terminal renderer) can read the
+# same hex values without depending on the CLI layer. CLI-only tokens
+# (TEXT, SECONDARY, ERROR, BG) stay here.
+from app.ui_theme import BRAND, DIM, HIGHLIGHT, WARNING
 
-HIGHLIGHT = "#B9EDAF"
-BRAND = "#66A17D"
 TEXT = "#E0E0E0"
 SECONDARY = "#888888"
-DIM = "#444444"
-WARNING = "#CEA25C"
 ERROR = "#C45B52"
 BG = "#0A0A0A"
 
@@ -51,6 +52,47 @@ DEVICE_CODE = BOLD_HIGHLIGHT
 
 # Distinct accent for incoming alerts (visually distinct from BOLD_BRAND used for assistant)
 INCOMING_ALERT_ACCENT = BOLD_WARNING
+
+__all__ = [
+    "ANSI_BOLD",
+    "ANSI_DIM",
+    "ANSI_RESET",
+    "BG",
+    "BOLD_BRAND",
+    "BOLD_BRAND_ANSI",
+    "BOLD_ERROR",
+    "BOLD_HIGHLIGHT",
+    "BOLD_TEXT",
+    "BOLD_WARNING",
+    "BRAND",
+    "BRAND_ANSI",
+    "DEVICE_CODE",
+    "DEVICE_CODE_ANSI",
+    "DIM",
+    "DIM_ANSI",
+    "DIM_COUNTER_ANSI",
+    "ERROR",
+    "GLYPH_ACTIVE",
+    "GLYPH_BULLET",
+    "GLYPH_ERROR",
+    "GLYPH_PROMPT",
+    "GLYPH_SUCCESS",
+    "GLYPH_WARNING",
+    "HIGHLIGHT",
+    "HIGHLIGHT_ANSI",
+    "INCOMING_ALERT_ACCENT",
+    "INPUT_SURFACE",
+    "INPUT_SURFACE_BG_ANSI",
+    "MARKDOWN_THEME",
+    "MENU_SELECTION_ROW_ANSI",
+    "PROMPT_ACCENT_ANSI",
+    "PROMPT_FRAME_ANSI",
+    "SECONDARY",
+    "SURFACE_BG_ANSI",
+    "TEXT",
+    "TEXT_ANSI",
+    "WARNING",
+]
 
 # ── Semantic glyphs ────────────────────────────────────────────────────────
 
