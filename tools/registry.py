@@ -26,8 +26,30 @@ from tools.skill_guidance import format_tool_skill_guidance, load_tool_skill_gui
 # separate; it's for plugin-style callers that ship tool packages outside of
 # opensre's own codebase.
 _INTEGRATION_TOOL_PACKAGES: tuple[str, ...] = (
+    "integrations.alertmanager.tools",
+    "integrations.argocd.tools",
+    "integrations.coralogix.tools",
+    "integrations.dagster.tools",
     "integrations.datadog.tools",
+    "integrations.eks.tools",
+    "integrations.elasticsearch.tools",
+    "integrations.google_docs.tools",
     "integrations.grafana.tools",
+    "integrations.groundcover.tools",
+    "integrations.helm.tools",
+    "integrations.honeycomb.tools",
+    "integrations.incident_io.tools",
+    "integrations.jenkins.tools",
+    "integrations.jira.tools",
+    "integrations.opsgenie.tools",
+    "integrations.pagerduty.tools",
+    "integrations.prefect.tools",
+    "integrations.signoz.tools",
+    "integrations.splunk.tools",
+    "integrations.tempo.tools",
+    "integrations.temporal.tools",
+    "integrations.vercel.tools",
+    "integrations.victoria_logs.tools",
 )
 
 logger = logging.getLogger(__name__)

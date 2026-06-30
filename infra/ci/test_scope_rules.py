@@ -35,6 +35,170 @@ RULES: tuple[PathRule, ...] = (
     PathRule("integrations/opensre/", ("tests/integrations/opensre/",)),
     PathRule("integrations/hermes/", ("tests/hermes/",)),
     PathRule(
+        "integrations/alertmanager/",
+        ("tests/integrations/alertmanager/", "tests/e2e/alertmanager/"),
+    ),
+    PathRule(
+        "integrations/dagster/",
+        ("tests/integrations/dagster/", "tests/synthetic/test_dagster_scenario.py"),
+    ),
+    PathRule(
+        "integrations/eks/",
+        (
+            "tests/integrations/eks/",
+            "tests/tools/test_eks_deployment_status_tool.py",
+            "tests/tools/test_eks_describe_addon_tool.py",
+            "tests/tools/test_eks_describe_cluster_tool.py",
+            "tests/tools/test_eks_events_tool.py",
+            "tests/tools/test_eks_list_clusters_tool.py",
+            "tests/tools/test_eks_list_deployments_tool.py",
+            "tests/tools/test_eks_list_namespaces_tool.py",
+            "tests/tools/test_eks_list_pods_tool.py",
+            "tests/tools/test_eks_node_health_tool.py",
+            "tests/tools/test_eks_nodegroup_health_tool.py",
+            "tests/tools/test_eks_pod_logs_tool.py",
+            "tests/tools/test_telemetry.py",
+            "tests/benchmarks/cloudopsbench/tests/test_bench_agent.py",
+        ),
+    ),
+    PathRule(
+        "integrations/elasticsearch/",
+        (
+            "tests/integrations/elasticsearch/",
+            "tests/tools/test_elasticsearch_logs_tool.py",
+        ),
+    ),
+    PathRule(
+        "integrations/google_docs/",
+        (
+            "tests/integrations/google_docs/",
+            "tests/test_google_docs.py",
+            "tests/tools/test_google_docs_create_report_tool.py",
+            "tests/tools/test_telemetry.py",
+        ),
+    ),
+    PathRule(
+        "integrations/groundcover/",
+        ("tests/integrations/groundcover/", "tests/tools/test_groundcover_tools.py"),
+    ),
+    PathRule(
+        "integrations/helm/",
+        ("tests/integrations/helm/", "tests/tools/test_helm_tools.py"),
+    ),
+    PathRule(
+        "integrations/incident_io/",
+        ("tests/integrations/incident_io/", "tests/tools/test_incident_io_tool.py"),
+    ),
+    PathRule(
+        "integrations/jira/",
+        (
+            "tests/integrations/jira/",
+            "tests/tools/test_jira_add_comment_tool.py",
+            "tests/tools/test_jira_create_issue_tool.py",
+            "tests/tools/test_jira_issue_detail_tool.py",
+            "tests/tools/test_jira_search_issues_tool.py",
+        ),
+    ),
+    PathRule(
+        "integrations/opsgenie/",
+        (
+            "tests/integrations/opsgenie/",
+            "tests/tools/test_opsgenie_alert_detail_tool.py",
+            "tests/tools/test_opsgenie_alerts_tool.py",
+        ),
+    ),
+    PathRule(
+        "integrations/pagerduty/",
+        (
+            "tests/integrations/pagerduty/",
+            "tests/tools/test_pagerduty_incident_detail_tool.py",
+            "tests/tools/test_pagerduty_incidents_tool.py",
+            "tests/tools/test_pagerduty_oncall_tool.py",
+            "tests/tools/test_pagerduty_services_tool.py",
+        ),
+    ),
+    PathRule(
+        "integrations/prefect/",
+        (
+            "tests/integrations/prefect/",
+            "tests/tools/test_prefect_flow_runs_tool.py",
+            "tests/tools/test_prefect_worker_health_tool.py",
+        ),
+    ),
+    PathRule(
+        "integrations/signoz/",
+        (
+            "tests/integrations/signoz/",
+            "tests/tools/test_signoz_tools.py",
+            "tests/synthetic/test_signoz_scenario.py",
+        ),
+    ),
+    PathRule(
+        "integrations/splunk/",
+        ("tests/integrations/splunk/", "tests/tools/test_splunk_search_tool.py"),
+    ),
+    PathRule(
+        "integrations/tempo/",
+        (
+            "tests/integrations/tempo/",
+            "tests/tools/test_tempo_tools.py",
+            "tests/synthetic/test_tempo_scenario.py",
+        ),
+    ),
+    PathRule(
+        "integrations/temporal/",
+        (
+            "tests/integrations/temporal/",
+            "tests/integrations/test_temporal_catalog.py",
+            "tests/synthetic/test_temporal_scenario.py",
+            "tests/tools/test_temporal_namespace_info_tool.py",
+            "tests/tools/test_temporal_task_queue_tool.py",
+            "tests/tools/test_temporal_workflow_history_tool.py",
+            "tests/tools/test_temporal_workflows_tool.py",
+        ),
+    ),
+    PathRule(
+        "integrations/vercel/",
+        (
+            "tests/integrations/vercel/",
+            "tests/tools/test_vercel_deployment_status_tool.py",
+            "tests/tools/test_vercel_logs_tool.py",
+        ),
+    ),
+    PathRule(
+        "integrations/victoria_logs/",
+        (
+            "tests/integrations/victoria_logs/",
+            "tests/tools/test_victoria_logs_tool.py",
+            "tests/e2e/victoria_logs/",
+        ),
+    ),
+    PathRule(
+        "integrations/argocd/",
+        (
+            "tests/integrations/argocd/",
+            "tests/tools/test_argocd_tools.py",
+        ),
+    ),
+    PathRule(
+        "integrations/coralogix/",
+        (
+            "tests/integrations/coralogix/",
+            "tests/tools/test_coralogix_logs_tool.py",
+        ),
+    ),
+    PathRule(
+        "integrations/honeycomb/",
+        (
+            "tests/integrations/honeycomb/",
+            "tests/tools/test_honeycomb_traces_tool.py",
+        ),
+    ),
+    PathRule(
+        "integrations/jenkins/",
+        ("tests/integrations/test_jenkins.py", "tests/synthetic/test_jenkins_scenario.py"),
+    ),
+    PathRule(
         "integrations/datadog/",
         (
             "tests/integrations/datadog/",
@@ -56,6 +220,7 @@ RULES: tuple[PathRule, ...] = (
             "tests/tools/test_grafana_metrics_tool.py",
             "tests/tools/test_grafana_service_names_tool.py",
             "tests/tools/test_grafana_traces_tool.py",
+            "tests/e2e/grafana_validation/",
         ),
     ),
     PathRule("integrations/", ("tests/integrations/",)),
