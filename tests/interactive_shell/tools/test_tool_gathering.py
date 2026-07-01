@@ -15,7 +15,7 @@ from typing import Any
 from rich.console import Console
 
 import core as runtime_module
-import core.agent as runtime_agent_module
+import core.agent_harness.agents.evidence_agent as evidence_agent_module
 import core.llm.agent_llm_client as agent_llm_client
 import tools.investigation.stages.gather_evidence.tools as investigate_tools
 from core.agent_harness.session import ReplSession
@@ -39,14 +39,33 @@ class _DummyTool:
 
 
 def _patch_agent_run(monkeypatch: Any, run: Any) -> None:
-    class _FakeAgent:
-        def __init__(self, **kwargs: Any) -> None:
-            self.kwargs = kwargs
+    """Stub ``_build_evidence_agent`` so gathering returns controlled results.
+
+    Gathering now constructs a plain :class:`core.agent.Agent` via the
+    ``_build_evidence_agent`` factory. Patching ``core.agent.Agent`` globally
+    would intercept every agent in the process, so we swap the factory instead:
+    the real tool-discovery, integration-resolution, and GitHub-scope paths run
+    (tests below depend on those), and the returned stub only replaces
+    ``.run()``. The tuple-event observer wired into the real Agent is surfaced
+    via a ``kwargs`` dict so existing ``_fake_run(kwargs, initial_messages)``
+    bodies keep working.
+    """
+
+    class _StubAgent:
+        def __init__(self, on_runtime_event: Any) -> None:
+            self._on_runtime_event = on_runtime_event
 
         def run(self, initial_messages: list[dict[str, Any]]) -> runtime_module.ToolLoopResult:
-            return run(self.kwargs, initial_messages)
+            kwargs = {"on_runtime_event": self._on_runtime_event}
+            return run(kwargs, initial_messages)
 
-    monkeypatch.setattr(runtime_agent_module, "Agent", _FakeAgent)
+    def _build(*, llm: Any, on_progress: Any, **_ignored: Any) -> Any:
+        _ = llm
+        from core.events import runtime_event_callback_from_observer
+
+        return _StubAgent(runtime_event_callback_from_observer(on_progress))
+
+    monkeypatch.setattr(evidence_agent_module, "_build_evidence_agent", _build)
 
 
 def test_no_tools_available_returns_none(monkeypatch: Any) -> None:
