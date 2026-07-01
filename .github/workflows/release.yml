@@ -12,7 +12,6 @@ on:
       - "**/*.md"
       - "**/*.mdx"
       - ".claude/**"
-      - ".github/**"
   schedule:
     - cron: "30 0 * * *"
   workflow_dispatch:
@@ -199,7 +198,7 @@ jobs:
             binary_name: opensre
             archive_ext: tar.gz
             pyinstaller_mode: onedir
-          - runner: ubuntu-24.04-arm
+          - runner: ubuntu-22.04-arm
             target: linux-arm64
             binary_name: opensre
             archive_ext: tar.gz
@@ -314,6 +313,25 @@ jobs:
               ;;
           esac
           "$BINARY_PATH" -h >/dev/null
+
+      - name: Check Linux binary glibc compatibility
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          max_glibc="$(
+            find dist/opensre -type f \( -name opensre -o -name '*.so' -o -name '*.so.*' \) -print0 \
+              | xargs -0 strings 2>/dev/null \
+              | grep -Eo 'GLIBC_[0-9]+\.[0-9]+(\.[0-9]+)?' \
+              | sort -Vu \
+              | tail -n 1 \
+              || true
+          )"
+          echo "Max required glibc symbol: ${max_glibc:-none}"
+          if [ -n "$max_glibc" ] && [ "$(printf '%s\n' "$max_glibc" GLIBC_2.35 | sort -V | tail -n 1)" != "GLIBC_2.35" ]; then
+            echo "Linux binary requires ${max_glibc}; pin the Linux runner back to Ubuntu 22.04 or lower dependency wheel requirements." >&2
+            exit 1
+          fi
 
       - name: Smoke test binary (Windows)
         if: runner.os == 'Windows'
